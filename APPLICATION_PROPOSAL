@@ -1,0 +1,136 @@
+# EduPulse – Application Proposal
+
+## 1. Introduction
+
+EduPulse is a dual-sided educational ecosystem designed to simplify communication and engagement between event organizers and learners.
+
+The platform helps educational institutions, training coordinators, and organizations manage programs efficiently while improving participant experience through automation and real-time interaction.
+
+---
+
+# 2. Purpose of the App
+
+The primary purpose of EduPulse is to eliminate communication gaps, simplify attendance tracking, and streamline the feedback process for educational events and programs.
+
+The app creates a seamless administrative workflow while enhancing learner participation and accessibility.
+
+---
+
+# 3. Target Users
+
+## A. Learners
+
+Students or participants looking to discover educational programs, register for events, and provide feedback conveniently.
+
+### Key Features
+
+* Personalized program feed based on interests
+* One-tap event registration with calendar sync
+* Session joining through the app
+* Feedback submission available after session completion
+* Text-based announcements and updates
+
+---
+
+## B. Admins
+
+Teachers, coordinators, HR managers, or organizers responsible for conducting and monitoring events.
+
+### Key Features
+
+* Live announcement and broadcast panel
+* Manual attendance management
+* Real-time participant monitoring
+* Analytics dashboard with feedback insights
+* Exportable reports and engagement metrics
+
+---
+
+# 4. User Journeys
+
+## User Journey 1 – Learner
+
+1. The learner opens the app and views upcoming educational programs.
+2. They select an event and register instantly.
+3. The event is automatically synced to their calendar.
+4. During the event, the learner joins the session through the app.
+5. Once the session ends, the feedback option becomes available on the same program details page.
+6. Submitted feedback is sent directly to the organizer’s email for review.
+
+---
+
+## User Journey 2 – Admin
+
+1. The admin creates and publishes a new event.
+2. Announcements are shared with eligible learners through the app.
+3. During the live session, the admin manually records attendance and monitors participation.
+4. After the event, feedback submissions are received through email and reviewed for evaluation.
+
+---
+
+# 5. Core Features
+
+* Event discovery and registration
+* Calendar integration
+* Session joining system
+* Manual attendance management
+* Integrated feedback submission
+* Text-based announcements and notifications
+* Analytics and reporting dashboard
+* Role-based login for learners and admins
+
+---
+
+# 6. Wireframe Design Strategy
+
+## Screen 1 – Login / Welcome Screen
+
+* Email and password fields
+* Learner/Admin toggle
+* Sign up and Forgot Password options
+
+---
+
+## Screen 2 – Learner Dashboard
+
+* Search bar
+* Featured announcements carousel
+* Upcoming registered events
+* Navigation menu
+
+---
+
+## Screen 3 – Program Listing Screen
+
+* Categorized event listings
+* Filter tags
+* RSVP buttons
+* Event preview cards
+
+---
+
+## Screen 4 – Program Details Screen
+
+* Event banner image
+* Detailed description
+* Date, time, and location information
+* Dynamic action button:
+
+  * **Join Session** during the live event
+  * **Submit Feedback** after session completion
+
+---
+
+# 7. Expected Impact
+
+EduPulse aims to improve communication, increase event participation, reduce manual administrative work, and provide valuable engagement insights for organizers.
+
+The app encourages a more organized and interactive educational experience for both learners and administrators.
+
+---
+
+# 8. Conclusion
+
+EduPulse combines accessibility, automation, and engagement into one centralized platform.
+
+By simplifying event management and improving learner interaction, the application creates a smarter and more efficient educational ecosystem.
