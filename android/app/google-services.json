@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "101161832131",
+    "project_id": "edupulse-frbs",
+    "storage_bucket": "edupulse-frbs.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101161832131:android:6ed49882822b2bc6271c76",
+        "android_client_info": {
+          "package_name": "com.example.flutter_application_2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCryJWPxKh_55j6UEBcQm5qvz6DNreUyuE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
