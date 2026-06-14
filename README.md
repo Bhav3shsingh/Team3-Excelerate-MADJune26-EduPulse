@@ -1,3 +1,9 @@
+<img width="358" height="745" alt="image" src="https://github.com/user-attachments/assets/b76eee82-564e-47b8-a1e3-176015057e87" />
+<img width="362" height="737" alt="image" src="https://github.com/user-attachments/assets/21f7354b-014e-4d98-a0fe-2236ebbb4285" />
+<img width="360" height="741" alt="image" src="https://github.com/user-attachments/assets/013b91b0-a031-474c-912f-d57d69b96410" />
+<img width="358" height="733" alt="image" src="https://github.com/user-attachments/assets/257e1b0c-3e2a-4172-9a71-3a5f21a7da18" />
+
+
 # App Proposal: EduPulse
 ## ​1. Purpose of the App
 ​EduPulse is a dual-sided educational ecosystem designed to bridge the gap between event coordinators and participants. The application solves communication gaps, automates attendance tracking, and simplifies the feedback loop, creating a frictionless administrative experience while boosting learner engagement.
