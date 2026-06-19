@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_2/authgate.dart';
 import 'package:flutter_application_2/firebase_options.dart';
 import 'package:flutter_application_2/pages/mainscreen.dart';
+import 'package:flutter_application_2/pages/master_admin_approval.dart';
 import 'package:flutter_application_2/pages/register.dart';
 import 'pages/welcome.dart';
 import 'pages/login.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         '/welcome':(context) => WelcomePage(),
         '/login':(context) => LoginPage(),
         '/register': (context) => RegisterPage(),
-        '/mainscreen': (context) => MainScreen()
+        '/mainscreen': (context) => MainScreen(),
+        '/pending-admins': (context) => const MasterAdminApprovalPage(),
       },
     );
   }

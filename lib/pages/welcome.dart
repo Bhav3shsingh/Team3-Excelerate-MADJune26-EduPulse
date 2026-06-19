@@ -3,12 +3,6 @@ import 'package:flutter/material.dart';
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
-  void adminLogin() {}
-
-  void learnerLogin() {
-    print("nani??");
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
