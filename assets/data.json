@@ -1,0 +1,41 @@
+[
+  {
+    "id": "17172728",
+    "name": "UI/UX Design Essentials for Mobile Apps",
+    "description": "Learn how to build intuitive, user-friendly mobile wireframes and dashboards. This session covers color theory, layout hierarchy, and building interactive prototypes that developers love.",
+    "imageUrl": "https://storage.googleapis.com/edupulse-app/banners/uiux_mobile_design.png",
+    "category": "Design",
+    "tags": ["UI/UX", "Wireframing", "Mobile Design"],
+    "meetingLink": "https://meet.google.com/xyz-qprs-tuv",
+    "schedule": {
+      "startTime": "2026-07-18T10:00:00Z",
+      "endTime": "2026-07-18T12:00:00Z"
+    }
+  },
+  {
+    "id": "17172729",
+    "name": "Product Management: From Ideation to Launch",
+    "description": "Discover how to coordinate cross-functional teams, track engagement metrics, and use analytics dashboards to guide your application's lifecycle and feature roadmap.",
+    "imageUrl": "https://storage.googleapis.com/edupulse-app/banners/product_management_launch.png",
+    "category": "Business",
+    "tags": ["Product Management", "Analytics", "Strategy"],
+    "meetingLink": "https://meet.google.com/mno-pqr-stu",
+    "schedule": {
+      "startTime": "2026-07-22T15:30:00Z",
+      "endTime": "2026-07-22T17:00:00Z"
+    }
+  },
+  {
+    "id": "17172730",
+    "name": "Data Science & Analytics Dashboard Workshop",
+    "description": "An interactive bootcamp focused on turning raw user interaction data into actionable reporting insights. Perfect for coordinators looking to master manual and automated reporting tools.",
+    "imageUrl": "https://storage.googleapis.com/edupulse-app/banners/datascience_dashboards.png",
+    "category": "Data Science",
+    "tags": ["Data Science", "Analytics", "Dashboards"],
+    "meetingLink": "https://meet.google.com/def-ghij-klm",
+    "schedule": {
+      "startTime": "2026-07-25T09:00:00Z",
+      "endTime": "2026-07-25T11:30:00Z"
+    }
+  }
+]
