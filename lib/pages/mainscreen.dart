@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as img;
+import 'package:intl/intl.dart';
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,10 +15,11 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   // Tracks the current index of the bottom bar
   int _selectedIndex = 0;
+  bool swap = false; // swaps programs for different roles
 
   // List of the actual screen widgets corresponding to each tab
   final List<Widget> _pages = [
-    const ProgramListingPageAdmin(),
+    const ProgramListingPage(),
     const DashboardPage(),
     const ProfilePage(),
   ];
@@ -25,6 +29,12 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _decider();
   }
 
   @override
@@ -42,32 +52,109 @@ class _MainScreenState extends State<MainScreen> {
         unselectedItemColor: Colors.grey, // Color for inactive tabs
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt),
-            label: 'Programs',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
             label: 'Dashboard',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            label: 'Programs',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
-          ),
+          )
         ],
       ),
     );
   }
+  
+  void _decider() async {
+    // decides program listing page based on role
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final doc = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+      if (doc.exists) {
+        final role = doc.data()?['role'] as String?;
+        setState(() {
+          swap = (role == 'admin' || role == 'master admin');
+          _pages[0] = swap ? const ProgramListingPageAdmin() : const ProgramListingPage();
+        });
+      }
+    }
+  }
 }
 
-class ProgramListingPage extends StatelessWidget {
+class ProgramListingPage extends StatefulWidget {
   const ProgramListingPage({super.key});
+
+  @override
+  State<ProgramListingPage> createState() => _ProgramListingPageState();
+}
+
+class _ProgramListingPageState extends State<ProgramListingPage> {
+  List<Map<String, dynamic>> data = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Program Listing"), centerTitle: true),
-      body: const Center(child: Text("Program Listing Content")),
+      appBar: AppBar(title: Text("Dashboard"), centerTitle: true),
+      body:ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                final item = data[index];
+                final title = item["title"] as String? ?? "No Title";
+                final startTime = item["startTime"] as String? ?? "No Time";
+                final endTime = item["endTime"] as String? ?? "No Time";
+
+                //formatting 
+                final st = DateFormat('yyyy-MM-dd HH:mm').parseStrict(startTime);
+                final et = DateFormat('yyyy-MM-dd HH:mm').parseStrict(endTime);
+
+                return Card(
+                  child: ListTile(
+                    title: Text(title),
+                    subtitle: Text("from ${st.day}/${st.month}/${st.year},${st.hour}:${st.minute} to ${et.day}/${et.month}/${et.year},${et.hour}:${et.minute}"),
+                  ),
+                );
+              },
+            ),
     );
+  }
+  
+  void _loadData() async {
+    final uid = FirebaseAuth.instance.currentUser?.uid;
+    if (uid == null) {
+      return;
+    }
+    
+
+    final userDoc = await FirebaseFirestore.instance.collection("users").doc(uid).get();
+    final registeredPrograms = (userDoc.data()?['programs'] as List<dynamic>?)?.cast<String>() ?? [];
+
+    if (registeredPrograms.isEmpty) {
+      if (!mounted) return;
+      setState(() {
+        data = [];
+      });
+      return;
+    }
+
+    //TODO Firestore whereIn only supports up to 10 values. 
+    //If registeredPrograms can contain more than 10 IDs, this will fail.
+    final snapshot = await FirebaseFirestore.instance
+        .collection("programs")
+        .where(FieldPath.documentId, whereIn: registeredPrograms)
+        .get();
+    if (!mounted) return;
+    setState(() {
+      data = snapshot.docs.map((doc) => doc.data()).toList();
+    });
   }
 }
 
@@ -80,8 +167,7 @@ class ProgramListingPageAdmin extends StatefulWidget{
 
 class _ProgramListingPageAdminState extends State<ProgramListingPageAdmin> {
 
-  //sample data
-  List<Map<String,dynamic>> programs = []; // initialize to avoid runtime 'not initialized' error
+  List<Map<String,dynamic>> programs = [];
 
   @override
   void initState() {
@@ -98,52 +184,205 @@ class _ProgramListingPageAdminState extends State<ProgramListingPageAdmin> {
   }
 
   @override
-  Widget build(Object context) {
+  Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(title: const Text("Program Listing"), centerTitle: true),
-      body: ListView.builder(
-        itemCount: programs.length,
-        itemBuilder: (context,index){
-          return Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey,
-                  spreadRadius: 2,
-                  blurRadius: 5,
-                  offset: const Offset(0, 3),
-                ),
-              ],
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: programs.length,
+              itemBuilder: (context,index){
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        programs[index]["title"] as String? ?? 'Untitled Program',
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        programs[index]["description"] as String? ?? 'No description available.',
+                      ),
+                      const SizedBox(height: 8),
+                    ],
+                  ),
+                );
+              },
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(programs[index]["name"], style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 8),
-                Text(programs[index]["description"]),
-                const SizedBox(height: 8)                  ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  final created = await Navigator.pushNamed(context, '/program-create');
+                  if (created == true) {
+                    _loadData();
+                  }
+                },
+                child: const Text("Create New Program"),
+              ),
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
 
 }
 
-class DashboardPage extends StatelessWidget {
+class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
+
+  @override
+  State<DashboardPage> createState() => _DashboardPageState();
+}
+
+class _DashboardPageState extends State<DashboardPage> {
+
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  List<Map<String,dynamic>> programs = [];
+  List<Map<String,dynamic>> filteredPrograms = [];
+
+  Future<void> _loadData() async {
+    final snapshot = await FirebaseFirestore.instance.collection("programs").get();
+    if (!mounted) return;
+    setState(() {
+      programs = snapshot.docs.map((doc) => doc.data()).toList();
+      filteredPrograms = programs;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Dashboard"), centerTitle: true),
-      body: const Center(child: Text("Dashboard Content")),
+      appBar: AppBar(title: const Text("Programs"), centerTitle: true),
+      body: Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    controller: _searchController,
+                    decoration: const InputDecoration(
+                      labelText: 'Search Programs',
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      if(value.isEmpty || value.trim()=="" ){
+                        filteredPrograms = programs;
+                      } else {
+                        setState(() {
+                          filteredPrograms = programs.where((program) {
+                            final title = program["title"] as String? ?? '';
+                           final category = program["category"] as String? ?? '';
+                            final tags = program["tags"] as String? ?? '';
+                            return title.toLowerCase().contains(value.toLowerCase()) || category.toLowerCase().contains(value.toLowerCase()) || tags.toLowerCase().contains(value.toLowerCase());
+                          }).toList();
+                        });
+                      }
+                    },
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.clear),
+                onPressed: () {
+                  setState(() {
+                    setState(() {
+                      _searchController.clear();
+                      filteredPrograms = programs;
+                    });
+                  });
+                },
+              ),
+            ],
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredPrograms.length,
+              itemBuilder: (context,index){
+                final item = filteredPrograms[index];
+                final title = item["title"] as String? ?? "No Title";
+                final description = item["description"] as String? ?? "No Description";
+                final startTime = item["startTime"] as String? ?? "No Time";
+                final endTime = item["endTime"] as String? ?? "No Time";
+
+                //formatting 
+                final st = DateFormat('yyyy-MM-dd HH:mm').parseStrict(startTime);
+                final et = DateFormat('yyyy-MM-dd HH:mm').parseStrict(endTime);
+
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      img.Image.network(item["imageUrl"] as String? ?? 'https://picsum.photos/400/100'),
+                      const SizedBox(height: 8),
+                      Text(
+                        title,
+                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        description.substring(  0, description.length > 100 ? 100 : description.length) + (description.length > 100 ? '...' : ''),
+                      ),
+                      const SizedBox(height: 8),
+                      Text("on ${st.day}/${st.month}/${st.year},${st.hour}:${st.minute} till ${et.day}/${et.month}/${et.year},${et.hour}:${et.minute}"),
+                      const SizedBox(height: 8)
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

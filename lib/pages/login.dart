@@ -20,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  // clean up old alerts and push a new floating error snackbar
   void _showErrorSnackbar(String message) {
     if (context.mounted) {
       ScaffoldMessenger.of(context).clearSnackBars();
@@ -29,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
           content: Text(message),
           backgroundColor: Colors.redAccent,
           behavior: SnackBarBehavior.floating,
-          duration: const Duration(seconds: 4),
+          duration: const Duration(seconds: 4)
         ),
       );
     }
@@ -54,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
         email: email,
         password: password,
       );
-      return true; // Execution succeeded gracefully
+      return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-credential') {
         _showErrorSnackbar("Invalid email or password combination.");
