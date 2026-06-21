@@ -41,8 +41,7 @@ Wireframe Design Strategy (4 Core Screens)
 ​Monitoring: During the live session, Alex displays the automated check-in QR code on the main screen and watches his dashboard populate with real-time attendance numbers.
 ​Evaluation: The next morning, Alex checks the Analytics Dashboard to review the learner satisfaction metrics and exports the feedback report for his team.
 
-## Documents
-
+# Documents
 | Document | Description |
 |-----------|-------------|
 | [README.md](./README.md) | Project overview |
