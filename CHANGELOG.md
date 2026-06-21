@@ -9,6 +9,12 @@ All notable changes to EduPulse are documented in this file.
 ### June 21, 2026
 #### Added
 - Notifications feed integrated into the programs page.
+- Created CHANGELOG.md to document project development history.
+
+#### Changed
+- Improved README documentation.
+- Added links to project documents from the README.
+- Refined README layout and formatting.
 
 ### June 20, 2026
 #### Added
