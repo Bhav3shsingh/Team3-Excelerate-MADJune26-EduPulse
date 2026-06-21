@@ -40,3 +40,11 @@ Wireframe Design Strategy (4 Core Screens)
 ​Broadcast: He uses the Live Broadcast Panel to send a push notification to all eligible learners.
 ​Monitoring: During the live session, Alex displays the automated check-in QR code on the main screen and watches his dashboard populate with real-time attendance numbers.
 ​Evaluation: The next morning, Alex checks the Analytics Dashboard to review the learner satisfaction metrics and exports the feedback report for his team.
+
+## Documents
+
+| Document | Description |
+|-----------|-------------|
+| [README.md](./README.md) | Project overview |
+| [CHANGELOG.md](./CHANGELOG.md) | Weekly development history |
+| [CONTRIBUTION.md](./CONTRIBUTION.md) | Contribution guidelines |
