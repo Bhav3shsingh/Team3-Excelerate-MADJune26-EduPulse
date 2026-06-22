@@ -2,11 +2,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/authgate.dart';
 import 'package:flutter_application_2/firebase_options.dart';
+import 'package:flutter_application_2/pages/form.dart';
 import 'package:flutter_application_2/pages/mainscreen.dart';
 import 'package:flutter_application_2/pages/master_admin_approval.dart';
+import 'package:flutter_application_2/pages/notificationscreen.dart';
+import 'package:flutter_application_2/pages/notifier.dart';
 import 'package:flutter_application_2/pages/programcreation.dart';
 import 'package:flutter_application_2/pages/programdetails.dart';
 import 'package:flutter_application_2/pages/register.dart';
+import 'package:flutter_application_2/pages/reviewsadmin.dart';
 import 'pages/welcome.dart';
 import 'pages/login.dart';
 
@@ -35,6 +39,10 @@ class MyApp extends StatelessWidget {
         '/pending-admins': (context) => const MasterAdminApprovalPage(),
         '/program-create': (context) => const ProgramCreateScreen(),
         '/program-details': (context) => ProgramDetails(),
+        '/newnotifications': (context) => const Notifier(),
+        '/notifications':(context) => const NotificationScreen(),
+        '/feedback':(context) => const FormScreen(),
+        '/reviews':(context) => const AdminReview()
       },
     );
   }

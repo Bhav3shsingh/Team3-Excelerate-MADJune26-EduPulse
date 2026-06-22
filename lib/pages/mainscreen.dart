@@ -13,7 +13,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // Tracks the current index of the bottom bar
   int _selectedIndex = 0;
   bool swap = false; // swaps programs for different roles
 
@@ -93,6 +92,8 @@ class ProgramListingPage extends StatefulWidget {
 
 class _ProgramListingPageState extends State<ProgramListingPage> {
   List<Map<String, dynamic>> data = [];
+  int userType = 0; // 0 for regular user, 1 for admin
+  List<String> notifications = [];
 
   @override
   void initState() {
@@ -104,7 +105,10 @@ class _ProgramListingPageState extends State<ProgramListingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Dashboard"), centerTitle: true),
-      body:ListView.builder(
+      body: Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
               itemCount: data.length,
               itemBuilder: (context, index) {
                 final item = data[index];
@@ -116,14 +120,47 @@ class _ProgramListingPageState extends State<ProgramListingPage> {
                 final st = DateFormat('yyyy-MM-dd HH:mm').parseStrict(startTime);
                 final et = DateFormat('yyyy-MM-dd HH:mm').parseStrict(endTime);
 
-                return Card(
-                  child: ListTile(
-                    title: Text(title),
-                    subtitle: Text("from ${st.day}/${st.month}/${st.year},${st.hour}:${st.minute} to ${et.day}/${et.month}/${et.year},${et.hour}:${et.minute}"),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/program-details', arguments: item);
+                  },
+                  child: Card(
+                    child: ListTile(
+                      title: Text(title),
+                      subtitle: Text("from ${st.day}/${st.month}/${st.year},${st.hour}:${st.minute} to ${et.day}/${et.month}/${et.year},${et.hour}:${et.minute}"),
+                    ),
                   ),
                 );
               },
             ),
+          ),
+            SizedBox(height: 20),
+            Padding(
+              padding: EdgeInsets.all(12),
+                child: Text(
+                        "Notifications",
+                        style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+            ),
+            SingleChildScrollView(
+              child: 
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: notifications.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: Icon(Icons.notifications),
+                        title: Text(notifications[index])
+                      );
+                    },
+                )
+            )
+        ]
+      )
     );
   }
   
@@ -132,9 +169,13 @@ class _ProgramListingPageState extends State<ProgramListingPage> {
     if (uid == null) {
       return;
     }
-    
+  
 
     final userDoc = await FirebaseFirestore.instance.collection("users").doc(uid).get();
+    final userRole = userDoc.data()?['role'] as String? ?? "student";
+    
+    userType = userRole == "admin" || userRole == "master admin" ? 1 : 0;
+
     final registeredPrograms = (userDoc.data()?['programs'] as List<dynamic>?)?.cast<String>() ?? [];
 
     if (registeredPrograms.isEmpty) {
@@ -168,6 +209,7 @@ class ProgramListingPageAdmin extends StatefulWidget{
 class _ProgramListingPageAdminState extends State<ProgramListingPageAdmin> {
 
   List<Map<String,dynamic>> programs = [];
+  List<String> notifications = [];
 
   @override
   void initState() {
@@ -177,9 +219,28 @@ class _ProgramListingPageAdminState extends State<ProgramListingPageAdmin> {
 
   Future<void> _loadData() async {
     final snapshot = await FirebaseFirestore.instance.collection("programs").get();
+    final notificationsSnapshot = await FirebaseFirestore.instance.collection("notifications").get();    
     if (!mounted) return;
+    
+    final loadedNotifications = notificationsSnapshot.docs
+        .map((doc) => doc.data()['message'] as String? ?? '')
+        .toList();
+    
+    final loadedPrograms = snapshot.docs.map((doc) {
+      final data = doc.data();
+      return {
+        'id': doc.id,
+        'title': data['title'],
+        'description': data['description'],
+        'imageUrl': data['imageUrl'],
+        'startTime': data['startTime'],
+        'endTime': data['endTime'],
+      };
+    }).toList();
+    
     setState(() {
-      programs = snapshot.docs.map((doc) => doc.data()).toList();
+      notifications = loadedNotifications;
+      programs = loadedPrograms;
     });
   }
 
@@ -187,18 +248,55 @@ class _ProgramListingPageAdminState extends State<ProgramListingPageAdmin> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Program Listing"), centerTitle: true),
+      appBar: AppBar(title: const Text("Admin Dashboard"), centerTitle: true),
       body: Column(
         children: [
+          Padding(
+              padding: EdgeInsets.all(12),
+                child: Text(
+                        "Notifications",
+                        style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+            ),
+            Row(
+              children:[GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/newnotifications');
+              },
+              child: Container(
+                color: Colors.blueAccent,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: const Text("New Notifications", style: TextStyle(color: Colors.white)),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, '/notifications');
+              },
+              child: Container(
+                color: Colors.blueAccent,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: const Text("View Notifications", style: TextStyle(color: Colors.white)),
+              ),
+            )
+            ]
+            ),
           Expanded(
             child: ListView.builder(
               itemCount: programs.length,
               itemBuilder: (context,index){
-                return Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/program-details', arguments: programs[index]);
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
@@ -218,11 +316,16 @@ class _ProgramListingPageAdminState extends State<ProgramListingPageAdmin> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        programs[index]["description"] as String? ?? 'No description available.',
+                        () {
+                          final desc = (programs[index]["description"] as String?) ?? '';
+                          return desc.length > 100 ? desc.substring(0, 100) + '...' : desc;
+                        }(),
+                        style: const TextStyle(fontSize: 14),
                       ),
                       const SizedBox(height: 8),
                     ],
                   ),
+                )
                 );
               },
             ),
@@ -279,7 +382,12 @@ class _DashboardPageState extends State<DashboardPage> {
     final snapshot = await FirebaseFirestore.instance.collection("programs").get();
     if (!mounted) return;
     setState(() {
-      programs = snapshot.docs.map((doc) => doc.data()).toList();
+      programs = snapshot.docs.map((doc) {
+        return {
+          'id': doc.id,
+          ...doc.data(),
+        };
+      }).toList();
       filteredPrograms = programs;
     });
   }
@@ -359,30 +467,33 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                     ],
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      img.Image.network(item["imageUrl"] as String? ?? 'https://picsum.photos/400/100'),
-                      const SizedBox(height: 8),
-                      Text(
-                        title,
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        description.substring(  0, description.length > 100 ? 100 : description.length) + (description.length > 100 ? '...' : ''),
-                      ),
-                      const SizedBox(height: 8),
-                      Text("on ${st.day}/${st.month}/${st.year},${st.hour}:${st.minute} till ${et.day}/${et.month}/${et.year},${et.hour}:${et.minute}"),
-                      const SizedBox(height: 8)
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/program-details', arguments: item);
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        img.Image.network(item["imageUrl"] as String? ?? 'https://picsum.photos/400/100'),
+                        const SizedBox(height: 8),
+                        Text(title,style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          description.length > 100 ? description.substring(0, 100) + '...' : description,
+                        ),
+                        const SizedBox(height: 8),
+                        Text("on ${st.day}/${st.month}/${st.year},${st.hour}:${st.minute} till ${et.day}/${et.month}/${et.year},${et.hour}:${et.minute}"),
+                        const SizedBox(height: 8)
                     ],
                   ),
+                )
                 );
               },
             ),
           ),
         ],
-      ),
+      )
     );
   }
 }

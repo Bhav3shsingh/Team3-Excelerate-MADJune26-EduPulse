@@ -57,7 +57,9 @@ class _ProgramCreateScreenState extends State<ProgramCreateScreen> {
 
     bool created = false;
     try {
-      await FirebaseFirestore.instance.collection('programs').add({
+      final docRef = FirebaseFirestore.instance.collection('programs').doc();
+      await docRef.set({
+        'id': docRef.id,
         'title': title,
         'description': description,
         'meetingLink': meetingLink,
@@ -66,6 +68,8 @@ class _ProgramCreateScreenState extends State<ProgramCreateScreen> {
         'tags': tags,
         'startTime': _startDateTime != null ? _formatDateTime(_startDateTime!) : null,
         'endTime': _endDateTime != null ? _formatDateTime(_endDateTime!) : null,
+        'participants': [],
+        'reviews': ''
       });
       created = true;
     } catch (e) {
@@ -90,6 +94,7 @@ class _ProgramCreateScreenState extends State<ProgramCreateScreen> {
               decoration: const InputDecoration(labelText: "Program Title",border: OutlineInputBorder()),
             ),
             TextField(
+              maxLength: null,
               controller: _descriptionController,
               decoration: const InputDecoration(labelText: "Program Description",border: OutlineInputBorder()),
             ),
@@ -226,7 +231,6 @@ class _ProgramCreateScreenState extends State<ProgramCreateScreen> {
     );
   }
 
-  // Format DateTime to a human-friendly string: yyyy-MM-dd HH:mm
   String _formatDateTime(DateTime dt) {
     String two(int n) => n.toString().padLeft(2, '0');
     return '${dt.year}-${two(dt.month)}-${two(dt.day)} ${two(dt.hour)}:${two(dt.minute)}';

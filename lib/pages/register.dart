@@ -76,11 +76,13 @@ class _RegisterPageState extends State<RegisterPage> {
         await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).set({
           'role': 'student',
           'email': email,
+          'programs': [],
         });
       } else if (uT == 1) {
         await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.uid).set({
           'role': 'pending admin',
           'email': email,
+          'programs': [],
         });
       }
 
