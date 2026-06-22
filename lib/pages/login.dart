@@ -79,7 +79,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Catch the userType argument passed from WelcomePage (defaults to 0 if null)
     final userType = ModalRoute.of(context)?.settings.arguments as int? ?? 0;
 
     return Scaffold(
@@ -118,16 +117,15 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 28),
 
-                  // Login Button with custom EduPulse Blue profile parameters
                   SizedBox(
                     width: 200,
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF0B66B1), // EduPulse Blue
+                        backgroundColor: const Color(0xFF0B66B1),
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.0), // Kept consistent rounded shape
+                          borderRadius: BorderRadius.circular(25.0),
                         ),
                       ),
                       onPressed: _isLoading
