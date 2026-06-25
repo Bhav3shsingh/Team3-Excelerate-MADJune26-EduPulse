@@ -77,6 +77,35 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  Future<void> sendPasswordResetEmail() async {
+    final email = _emailController.text.trim();
+    if (email.isEmpty) {
+      _showErrorSnackbar("Enter your email address to reset password.");
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      if (mounted) {
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Password reset link sent. Check your email.'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        _showErrorSnackbar(e.message ?? 'Failed to send reset email.');
+      }
+    } catch (e) {
+      if (mounted) {
+        _showErrorSnackbar('Failed to send reset email.');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final userType = ModalRoute.of(context)?.settings.arguments as int? ?? 0;
@@ -115,8 +144,15 @@ class _LoginPageState extends State<LoginPage> {
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  const SizedBox(height: 28),
-
+                  const SizedBox(height: 12),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: TextButton(
+                      onPressed: _isLoading ? null : sendPasswordResetEmail,
+                      child: const Text('Forgot password?'),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   SizedBox(
                     width: 200,
                     height: 50,

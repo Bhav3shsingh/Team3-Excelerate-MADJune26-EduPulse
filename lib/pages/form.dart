@@ -27,56 +27,73 @@ class _FormScreenState extends State<FormScreen>{
     final id = ModalRoute.of(context)?.settings.arguments as String? ?? '';
     return Scaffold(
       appBar: AppBar(
-        title: Text("Feedback"),
+        title: const Text("Feedback"),
       ),
-      body:
-        Column(
-          children:[
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'Share your feedback',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 16),
             TextField(
               controller: _textController,
-              maxLength: null,
-              decoration:const InputDecoration(
-                label:Text('Write Here'),
-                border:OutlineInputBorder()
-              )
+              maxLines: 8,
+              decoration: const InputDecoration(
+                labelText: 'Write your feedback',
+                border: OutlineInputBorder(),
+              ),
             ),
-            OutlinedButton(onPressed: () async {
-              final String res = _textController.text.trim();
+            const SizedBox(height: 24),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
+              onPressed: () async {
+                final String res = _textController.text.trim();
 
-              if (id.isEmpty) {
-                if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Program id is missing.')), 
-                  );
+                if (id.isEmpty) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Program id is missing.')),
+                    );
+                  }
+                  return;
                 }
-                return;
-              }
 
-              final docRef = FirebaseFirestore.instance.collection('programs').doc(id);
-              final snapshot = await docRef.get();
-              final email = FirebaseAuth.instance.currentUser?.email.toString();
+                final docRef = FirebaseFirestore.instance.collection('programs').doc(id);
+                final snapshot = await docRef.get();
+                final email = FirebaseAuth.instance.currentUser?.email.toString();
 
-              if (!snapshot.exists) {
-                if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Program not found.')), 
-                  );
+                if (!snapshot.exists) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Program not found.')),
+                    );
+                  }
+                  return;
                 }
-                return;
-              }
 
-              final String rew = snapshot.data()?['reviews']?.toString() ?? '';
+                final String rew = snapshot.data()?['reviews']?.toString() ?? '';
 
-              if (res.isNotEmpty) {
-                await docRef.update({  
-                  'reviews': rew.isEmpty ? res : '$email : $rew\n$res',
-                });
+                if (res.isNotEmpty) {
+                  await docRef.update({
+                    'reviews': rew.isEmpty ? 'Anonymous : $res\n$rew' : '$email : $res\n$rew',
+                  });
 
-                if (mounted) Navigator.of(context).pop();
-              }
-            }, child: Text('SUBMIT'))
-          ]
-        )
+                  if (mounted) Navigator.of(context).pop();
+                }
+              },
+              child: const Text('SUBMIT'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

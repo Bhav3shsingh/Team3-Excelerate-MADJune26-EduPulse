@@ -39,16 +39,16 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Body displays the active screen based on _selectedIndex
       body: _pages[_selectedIndex],
       
       // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color(0xFF0D111A),
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed, 
-        selectedItemColor: Colors.blue, // Color for the active tab
-        unselectedItemColor: Colors.grey, // Color for inactive tabs
+        selectedItemColor: const Color(0xFFE9246B), // Color for the active tab
+        unselectedItemColor: Colors.white, // Color for inactive tabs
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -134,31 +134,19 @@ class _ProgramListingPageState extends State<ProgramListingPage> {
               },
             ),
           ),
-            SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.all(12),
-                child: Text(
-                        "Notifications",
-                        style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => Navigator.pushNamed(context, '/notifications'),
+                    child: const Text('View Notifications'),
+                  ),
+                ],
+              ),
             ),
-            SingleChildScrollView(
-              child: 
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: notifications.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: Icon(Icons.notifications),
-                        title: Text(notifications[index])
-                      );
-                    },
-                )
-            )
+          const SizedBox(height: 8)
         ]
       )
     );
@@ -230,11 +218,7 @@ class _ProgramListingPageAdminState extends State<ProgramListingPageAdmin> {
       final data = doc.data();
       return {
         'id': doc.id,
-        'title': data['title'],
-        'description': data['description'],
-        'imageUrl': data['imageUrl'],
-        'startTime': data['startTime'],
-        'endTime': data['endTime'],
+        ...data,
       };
     }).toList();
     
@@ -251,38 +235,25 @@ class _ProgramListingPageAdminState extends State<ProgramListingPageAdmin> {
       appBar: AppBar(title: const Text("Admin Dashboard"), centerTitle: true),
       body: Column(
         children: [
-          Padding(
-              padding: EdgeInsets.all(12),
-                child: Text(
-                        "Notifications",
-                        style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-            ),
+          const SizedBox(height: 8),
             Row(
-              children:[GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/newnotifications');
-              },
-              child: Container(
-                color: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: const Text("New Notifications", style: TextStyle(color: Colors.white)),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/notifications');
-              },
-              child: Container(
-                color: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: const Text("View Notifications", style: TextStyle(color: Colors.white)),
-              ),
-            )
-            ]
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/newnotifications');
+                  },
+                  child: const Text('New Notification'),
+                ),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/notifications');
+                  },
+                  child: const Text('View Notifications'),
+                ),
+                const SizedBox(width: 12),
+              ],
             ),
           Expanded(
             child: ListView.builder(
@@ -508,6 +479,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   String _role = '';
   bool _isLoadingRole = true;
+  bool _isSendingReset = false;
 
   @override
   void initState() {
@@ -531,6 +503,61 @@ class _ProfilePageState extends State<ProfilePage> {
     });
   }
 
+  Future<void> _sendPasswordResetEmail() async {
+    final email = FirebaseAuth.instance.currentUser?.email;
+    if (email == null || email.isEmpty) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('No signed-in email available for password reset.'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+      return;
+    }
+
+    setState(() {
+      _isSendingReset = true;
+    });
+
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Password reset link sent to your email.'),
+            backgroundColor: Colors.green,
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(e.message ?? 'Failed to send reset email.'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to send reset email.'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSendingReset = false;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final uid = FirebaseAuth.instance.currentUser?.uid ?? 'Unknown UID';
@@ -544,6 +571,31 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const Text(
+              'EduPulse',
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 4),
+            Center(
+              child: Image.asset(
+                'assets/logo.png',
+                width: 220,
+                height: 120,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) => const Padding(
+                  padding: EdgeInsets.only(top: 9),
+                  child: Text('Image asset not found', style: TextStyle(color: Colors.red)),
+                ),
+              ),
+            ),
+            const Center(
+              child: Text(
+                "An Excelerate App",
+                style: TextStyle(fontSize: 14, color: Color(0xFFE9246B)),
+              ),
+            ),
+            const SizedBox(height: 24),
             Text('UID: $uid', style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 8),
             Text('Email: $email', style: const TextStyle(fontSize: 16)),
@@ -564,6 +616,21 @@ class _ProfilePageState extends State<ProfilePage> {
                 },
                 child: const Text('Manage Pending Admins'),
               ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+                foregroundColor: Colors.white,
+              ),
+              onPressed: _isSendingReset ? null : _sendPasswordResetEmail,
+              child: _isSendingReset
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    )
+                  : const Text('Reset Password'),
+            ),
             const SizedBox(height: 12),
             OutlinedButton(
               onPressed: () {

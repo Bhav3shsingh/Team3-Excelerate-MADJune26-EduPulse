@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -23,30 +24,60 @@ class _NotificationscreenState extends State<NotificationScreen>{
    Widget build(BuildContext context) {
      return Scaffold(
        appBar: AppBar(title: const Text("Notifications"), centerTitle: true),
-       body: SingleChildScrollView(
-              child: 
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: notifications.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: Icon(Icons.notifications),
-                        title: Text(notifications[index])
-                      );
-                    },
-                  )
-          ),
+       body: notifications.isEmpty
+           ? const Center(child: Text('No notifications'))
+           : ListView.builder(
+               padding: const EdgeInsets.all(12),
+               itemCount: notifications.length,
+               itemBuilder: (context, index) {
+                 return Card(
+                   margin: const EdgeInsets.symmetric(vertical: 8),
+                   child: ListTile(
+                     leading: const Icon(Icons.notifications),
+                     title: Text(notifications[index]),
+                   ),
+                 );
+               },
+             ),
            );
          }
          
           void _loadNot() async{
+            final uid = FirebaseAuth.instance.currentUser?.uid;
+            String role = '';
+            if (uid != null) {
+              final userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
+              role = userDoc.data()?['role'] as String? ?? '';
+            }
+
             final notificationsSnapshot = await FirebaseFirestore.instance.collection("notifications").get();
+            final allNotifications = <String>[];
+            for (final doc in notificationsSnapshot.docs) {
+              final data = doc.data();
+              final msg = data['message'] as String? ?? '';
+              final targetUid = data['uid'] as String?;
+              final roles = (data['roles'] as List<dynamic>?)?.cast<String>();
+
+              if (targetUid != null) {
+                if (uid != null && targetUid == uid) {
+                  allNotifications.add(msg);
+                }
+                continue;
+              }
+              if (roles != null && roles.isNotEmpty) {
+                if (role.isNotEmpty && roles.contains(role)) {
+                  allNotifications.add(msg);
+                }
+                continue;
+              }
+              // public notification
+              allNotifications.add(msg);
+            }
+
             if (mounted) {
-              final allNotifications = notificationsSnapshot.docs.map((doc) => doc.data()['message'] as String? ??'').toList();
               setState(() {
-              notifications = allNotifications;
-            });
+                notifications = allNotifications;
+              });
             }
           }
 }

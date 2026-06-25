@@ -27,6 +27,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: const Color(0xFFFF5E3A),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFFF5E3A)).copyWith(
+          secondary: const Color(0xFFE9246B),
+          primary: const Color(0xFFFF5E3A),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF0D111A),
+          foregroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 0,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: const Color(0xFFFF5E3A),
+            foregroundColor: Colors.white,
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: const Color(0xFFE9246B),
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       title: 'EduPulse',
       initialRoute: '/',
@@ -38,7 +62,9 @@ class MyApp extends StatelessWidget {
         '/mainscreen': (context) => MainScreen(),
         '/pending-admins': (context) => const MasterAdminApprovalPage(),
         '/program-create': (context) => const ProgramCreateScreen(),
+        '/program-edit': (context) => const ProgramEditScreen(),
         '/program-details': (context) => ProgramDetails(),
+        '/manage-participants': (context) => const ManageParticipantsPage(),
         '/newnotifications': (context) => const Notifier(),
         '/notifications':(context) => const NotificationScreen(),
         '/feedback':(context) => const FormScreen(),

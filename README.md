@@ -1,4 +1,4 @@
-<img width="358" height="745" alt="image" src="https://github.com/user-attachments/assets/b76eee82-564e-47b8-a1e3-176015057e87" />
+﻿<img width="358" height="745" alt="image" src="https://github.com/user-attachments/assets/b76eee82-564e-47b8-a1e3-176015057e87" />
 <img width="362" height="737" alt="image" src="https://github.com/user-attachments/assets/21f7354b-014e-4d98-a0fe-2236ebbb4285" />
 <img width="360" height="741" alt="image" src="https://github.com/user-attachments/assets/013b91b0-a031-474c-912f-d57d69b96410" />
 <img width="358" height="733" alt="image" src="https://github.com/user-attachments/assets/257e1b0c-3e2a-4172-9a71-3a5f21a7da18" />
@@ -8,13 +8,22 @@
 ## ​1. Purpose of the App
 ​EduPulse is a dual-sided educational ecosystem designed to bridge the gap between event coordinators and participants. The application solves communication gaps, automates attendance tracking, and simplifies the feedback loop, creating a frictionless administrative experience while boosting learner engagement.
 
-Wireframe Design Strategy (4 Core Screens)
+Wireframe Design Strategy (current app screens)
 
-## Screen NameCore Elements Include:
-1. Login / Welcome ScreenEmail/Password input fields, "Sign up as Learner" vs. "Admin" toggle switch, and a "Forgot Password" link.
-2. Home / Dashboard (Learner)Bottom navigation bar, top search bar, a carousel for "Featured Announcements", and a vertical scroll list of registered upcoming events.
-3. Program Listing ScreenCategorized list layout with filtering tags (e.g., "Technology", "Business", "Mandatory"), with quick cards showing event title, date, time, and an "RSVP" button.
-4. Program Details / ProfileLarge header image area, detailed text box for course description, date/time/location icons, and a prominent call-to-action button ("Join Live Session" or "Submit Feedback Form"). 
+## Screen Name/Core Elements Include:
+1. Welcome Screen (`WelcomePage`) - landing page with a full-width background image, centered welcome text, and buttons for learner and admin login flows.
+2. Login Screen (`LoginPage`) - email/password fields, login button, forgot password link, and a create-account link that passes the selected user type.
+3. Register Screen (`RegisterPage`) - registration form for new users, including user details and role selection for learners or admins.
+4. Main Screen (`MainScreen`) - bottom navigation container with Dashboard, Programs, and Profile tabs for authenticated users.
+5. Dashboard Screen (`DashboardPage`) - role-aware dashboard content, summary cards, and quick access to programs or notifications.
+6. Program Listing Screen (`ProgramListingPage`, `ProgramListingPageAdmin`) - Firestore-backed program cards, filtered by user role with admin-specific management actions.
+7. Program Details Screen (`ProgramDetails`) - detailed event/program information, schedule fields, participant management, and action buttons for join or edit.
+8. Program Create/Edit Screen (`ProgramCreateScreen`, `ProgramEditScreen`) - admin forms for creating new programs or updating existing program data.
+9. Pending Admin Approval Screen (`MasterAdminApprovalPage`) - admin review list for pending user approvals and role validation.
+10. Notifications Screen (`NotificationScreen`) - view and browse app notifications and announcements.
+11. New Notification Screen (`Notifier`) - admin notification creation interface for sending messages to users.
+12. Feedback/Form Screen (`FormScreen`) - feedback and form submission screen for program responses.
+13. Admin Review Screen (`AdminReview`) - admin review and moderation screen for feedback or program assessments.
 
 ## ​2. Target Users & Key Features
 ###  ​A. Learners 
