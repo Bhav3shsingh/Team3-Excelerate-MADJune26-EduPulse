@@ -1,10 +1,12 @@
-<img width="382" height="787" alt="image" src="https://github.com/user-attachments/assets/07f452a9-fcad-4e8e-8350-94b8491af0ef" />
-<img width="379" height="783" alt="image" src="https://github.com/user-attachments/assets/667788b8-ab5c-4865-bf30-1dc829048f93" />
-<img width="378" height="779" alt="image" src="https://github.com/user-attachments/assets/3bd7aa99-2290-407c-b8d6-fd4e40c6b4fb" />
-<img width="375" height="778" alt="image" src="https://github.com/user-attachments/assets/8ba34596-d25e-462d-b460-3d3a1fb9a8ea" />
-<img width="377" height="780" alt="image" src="https://github.com/user-attachments/assets/a2c5edd6-f43c-4a47-be2a-383725b32e5e" />
-<img width="380" height="780" alt="image" src="https://github.com/user-attachments/assets/aa1f38d9-a3d6-4867-bb9d-cbeccc81732c" />
-<img width="382" height="776" alt="image" src="https://github.com/user-attachments/assets/ab7ce0f0-c180-4c28-b678-622f101403be" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/07f452a9-fcad-4e8e-8350-94b8491af0ef" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/667788b8-ab5c-4865-bf30-1dc829048f93" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/3bd7aa99-2290-407c-b8d6-fd4e40c6b4fb" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/8ba34596-d25e-462d-b460-3d3a1fb9a8ea" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/a2c5edd6-f43c-4a47-be2a-383725b32e5e" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/aa1f38d9-a3d6-4867-bb9d-cbeccc81732c" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/ab7ce0f0-c180-4c28-b678-622f101403be" />
+<img height="510"  alt="image" src="https://github.com/user-attachments/assets/99e186ac-4519-48e6-ad7b-05ce255a50b5" />
+
 
 
 # App Proposal: EduPulse
