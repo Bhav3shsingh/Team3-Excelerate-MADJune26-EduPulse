@@ -108,14 +108,12 @@ class _ProgramDetailsState extends State<ProgramDetails> {
               if (_isLoading)
                 const Center(child: CircularProgressIndicator())
                 else
-                ElevatedButton(
+                Row(children:[ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
                   ),
                   onPressed: () async {
-                    //TODO add admin button functions for rest of labels
-
                     if (role == 'admin' || role == 'master admin') {
                       if (mode == 0) {
                         Navigator.pushNamed(
@@ -125,15 +123,7 @@ class _ProgramDetailsState extends State<ProgramDetails> {
                         );
                         return;
                       }
-                      if (mode == 1) {
-                        Navigator.pushNamed(
-                          context,
-                          '/manage-participants',
-                          arguments: program,
-                        );
-                        return;
-                      }
-                      if (mode == 2) {
+                      if (mode == 2 || mode==1) {
                         Navigator.pushNamed(
                           context,
                           '/reviews',
@@ -218,8 +208,6 @@ class _ProgramDetailsState extends State<ProgramDetails> {
                     role == 'admin' || role == 'master admin'
                         ? (mode == 0
                               ? 'Edit Program'
-                              : mode == 1
-                              ? 'Manage Participants'
                               : 'View Feedback')
                         : _isEnrolled
                         ? (mode == 0
@@ -232,6 +220,20 @@ class _ProgramDetailsState extends State<ProgramDetails> {
                               : 'You can no longer enroll'),
                   ),
                 ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Colors.white,
+                  ),
+                  child:Text('Manage Participants'),
+                  onPressed:(){
+                    Navigator.pushNamed(
+                        context,
+                        '/manage-participants',
+                        arguments: program,
+                    );
+                  }
+              )]),
             ],
           ),
         ),
