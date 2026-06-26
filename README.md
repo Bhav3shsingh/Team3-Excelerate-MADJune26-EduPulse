@@ -1,8 +1,4 @@
-﻿<img width="358" height="745" alt="image" src="https://github.com/user-attachments/assets/b76eee82-564e-47b8-a1e3-176015057e87" />
-<img width="362" height="737" alt="image" src="https://github.com/user-attachments/assets/21f7354b-014e-4d98-a0fe-2236ebbb4285" />
-<img width="360" height="741" alt="image" src="https://github.com/user-attachments/assets/013b91b0-a031-474c-912f-d57d69b96410" />
-<img width="358" height="733" alt="image" src="https://github.com/user-attachments/assets/257e1b0c-3e2a-4172-9a71-3a5f21a7da18" />
-
+[![Run App](https://img.shields.io/badge/EduPulse-Run%20Live%20App-brightgreen?style=for-the-badge&logo=flutter)](https://bhav3shsingh.github.io/Team3-Excelerate-MADJune26-EduPulse/)
 
 # App Proposal: EduPulse
 ## ​1. Purpose of the App
@@ -24,6 +20,16 @@ Wireframe Design Strategy (current app screens)
 11. New Notification Screen (`Notifier`) - admin notification creation interface for sending messages to users.
 12. Feedback/Form Screen (`FormScreen`) - feedback and form submission screen for program responses.
 13. Admin Review Screen (`AdminReview`) - admin review and moderation screen for feedback or program assessments.
+
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/07f452a9-fcad-4e8e-8350-94b8491af0ef" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/667788b8-ab5c-4865-bf30-1dc829048f93" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/3bd7aa99-2290-407c-b8d6-fd4e40c6b4fb" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/8ba34596-d25e-462d-b460-3d3a1fb9a8ea" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/a2c5edd6-f43c-4a47-be2a-383725b32e5e" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/aa1f38d9-a3d6-4867-bb9d-cbeccc81732c" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/ab7ce0f0-c180-4c28-b678-622f101403be" />
+<img height="510"  alt="image" src="https://github.com/user-attachments/assets/99e186ac-4519-48e6-ad7b-05ce255a50b5" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/65427869-2bd9-4ab5-9496-f05808bff116" />
 
 ## ​2. Target Users & Key Features
 ###  ​A. Learners 
