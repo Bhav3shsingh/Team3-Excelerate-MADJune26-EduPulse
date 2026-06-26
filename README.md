@@ -1,3 +1,5 @@
+[![Run App](https://img.shields.io/badge/EduPulse-Run%20Live%20App-brightgreen?style=for-the-badge&logo=flutter)](https://bhav3shsingh.github.io/Team3-Excelerate-MADJune26-EduPulse/)
+
 # App Proposal: EduPulse
 ## ​1. Purpose of the App
 ​EduPulse is a dual-sided educational ecosystem designed to bridge the gap between event coordinators and participants. The application solves communication gaps, automates attendance tracking, and simplifies the feedback loop, creating a frictionless administrative experience while boosting learner engagement.
