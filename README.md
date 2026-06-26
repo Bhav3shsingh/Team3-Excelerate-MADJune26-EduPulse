@@ -1,16 +1,3 @@
-<img height="510" alt="image" src="https://github.com/user-attachments/assets/07f452a9-fcad-4e8e-8350-94b8491af0ef" />
-<img height="510" alt="image" src="https://github.com/user-attachments/assets/667788b8-ab5c-4865-bf30-1dc829048f93" />
-<img height="510" alt="image" src="https://github.com/user-attachments/assets/3bd7aa99-2290-407c-b8d6-fd4e40c6b4fb" />
-<img height="510" alt="image" src="https://github.com/user-attachments/assets/8ba34596-d25e-462d-b460-3d3a1fb9a8ea" />
-<img height="510" alt="image" src="https://github.com/user-attachments/assets/a2c5edd6-f43c-4a47-be2a-383725b32e5e" />
-<img height="510" alt="image" src="https://github.com/user-attachments/assets/aa1f38d9-a3d6-4867-bb9d-cbeccc81732c" />
-<img height="510" alt="image" src="https://github.com/user-attachments/assets/ab7ce0f0-c180-4c28-b678-622f101403be" />
-<img height="510"  alt="image" src="https://github.com/user-attachments/assets/99e186ac-4519-48e6-ad7b-05ce255a50b5" />
-<img height="510" alt="image" src="https://github.com/user-attachments/assets/65427869-2bd9-4ab5-9496-f05808bff116" />
-
-
-
-
 # App Proposal: EduPulse
 ## ​1. Purpose of the App
 ​EduPulse is a dual-sided educational ecosystem designed to bridge the gap between event coordinators and participants. The application solves communication gaps, automates attendance tracking, and simplifies the feedback loop, creating a frictionless administrative experience while boosting learner engagement.
@@ -31,6 +18,16 @@ Wireframe Design Strategy (current app screens)
 11. New Notification Screen (`Notifier`) - admin notification creation interface for sending messages to users.
 12. Feedback/Form Screen (`FormScreen`) - feedback and form submission screen for program responses.
 13. Admin Review Screen (`AdminReview`) - admin review and moderation screen for feedback or program assessments.
+
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/07f452a9-fcad-4e8e-8350-94b8491af0ef" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/667788b8-ab5c-4865-bf30-1dc829048f93" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/3bd7aa99-2290-407c-b8d6-fd4e40c6b4fb" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/8ba34596-d25e-462d-b460-3d3a1fb9a8ea" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/a2c5edd6-f43c-4a47-be2a-383725b32e5e" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/aa1f38d9-a3d6-4867-bb9d-cbeccc81732c" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/ab7ce0f0-c180-4c28-b678-622f101403be" />
+<img height="510"  alt="image" src="https://github.com/user-attachments/assets/99e186ac-4519-48e6-ad7b-05ce255a50b5" />
+<img height="510" alt="image" src="https://github.com/user-attachments/assets/65427869-2bd9-4ab5-9496-f05808bff116" />
 
 ## ​2. Target Users & Key Features
 ###  ​A. Learners 
