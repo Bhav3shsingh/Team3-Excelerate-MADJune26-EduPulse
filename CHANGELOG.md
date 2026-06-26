@@ -1,96 +1,58 @@
 # Changelog
 
-All notable changes to EduPulse are documented in this file.
+All notable changes to [EduPulse](https://github.com/Bhav3shsingh/Team3-Excelerate-MADJune26-EduPulse) are documented in this file.
 
 ---
 
-# Week 3 (June 15 – June 21, 2026)
+## Week 4 (June 22 – June 28, 2026)
 
-### June 21, 2026
-#### Added
-- Notifications feed integrated into the programs page.
-- Created CHANGELOG.md to document project development history.
+### Added
+* **Admin Features:** Added Manage Participants, Edit Program functionality, and new Forms with Firebase storage integration.
+* **Other Feautes:** 'Forgot Password/Password Reset' added.
+* **UI & Branding:** Added Excelerate Branding and improved overall UI.
+* **Notifications:** fixed notifications.
 
-#### Changed
-- Improved README documentation.
-- Added links to project documents from the README.
-- Refined README layout and formatting.
+### Changed
+* **Documentation:** Updated `README.md` with new app descriptions, additional images, and added height attributes to image tags. Updated `CHANGELOG.md`
 
-### June 20, 2026
-#### Added
-- Student Program List.
-- Program listing functionality.
-- Search and tag support.
-- Student-side program assets.
-
-#### Changed
-- Corrected labels and refined the student programs interface.
-
-### June 19, 2026
-#### Added
-- User roles and admin control system.
-- Role-based server rules and permissions.
-
-#### Maintenance
-- Synced remote tracking branch with main.
+### Fixed
+* Addressed vertical scroll length unbound issue.
+* Fixed form bugs and unbound errors.
 
 ---
 
-# Week 2 (June 8 – June 14, 2026)
+## Week 3 (June 15 – June 21, 2026)
 
-### June 14, 2026
-#### Merged
-- Pull Request #3.
-- Main branch updates.
+### Added
+* **Access Control:** Added user roles, admin control, and updated server rules accordingly.
+* **Student Features:** Implemented the student side of programs, including assets, Student Program List, program listing, search functionality, and tags.
+* **Admin Features:** Program Creation
+* **Notifications Feed:** Integrated notifications feed into the programs file.
+* **Documentation:** Created the initial `CHANGELOG.md` file.
 
-### June 12, 2026
-#### Added
-- Application proposal details and images.
-
-#### Changed
-- Enhanced README with screenshots and project information.
-
-### June 8, 2026
-#### Added
-- Login flow.
-- Signup flow.
-- State management setup.
+### Changed
+* **UI Updates:** Modified and corrected labels in the student interface.
+* **Documentation:** Made multiple updates and refinements to `README.md`.
 
 ---
 
-# Week 1 (June 1 – June 7, 2026)
+## Week 2 (June 8 – June 14, 2026)
 
-### June 7, 2026
-#### Merged
-- Pull Request #1.
-- Pull Request #2.
+### Added
+* **Authentication:** Initialized login flow, signup flow, and state management setup.
+* **UI Setup:** Made the UI screen and navbar for the different Screens: Dashboard, Program Listing, Profile
 
-#### Changed
-- Improved README appearance and documentation.
-
-### June 3, 2026
-#### Added
-- CONTRIBUTION.md for collaboration guidelines.
-
-### June 2, 2026
-#### Added
-- Project wireframes and UI planning.
-- App proposal and feature roadmap.
-- Detailed README documentation.
-
-### June 1, 2026
-#### Added
-- Initial GitHub repository and project setup.
-- Basic project structure.
-- Initial commit.
+### Changed
+* **Documentation:** Updated `CONTRIBUTION.md` and enhanced `README.md` with screenshots and detailed app proposal details.
 
 ---
 
-# Upcoming
+## Week 1 (June 1 – June 7, 2026)
 
-### Planned
-- Firebase Cloud Messaging (FCM) support.
-- Push notifications.
-- Dynamic program updates from Firestore.
-- Enhanced notification cards and UI.
-- Additional admin features and analytics.
+### Added
+* **Repository Setup:** Initial commit to create the repository.
+* **Documentation:** Created `CONTRIBUTION.md` for collaboration guidelines.
+* **Project Planning:** Added the application proposal as a separate document.
+
+### Changed
+* **Documentation:** Revised `README.md` with detailed app proposal, features roadmap, and visual appeal improvements.
