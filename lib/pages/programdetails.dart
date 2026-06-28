@@ -123,7 +123,7 @@ class _ProgramDetailsState extends State<ProgramDetails> {
                         );
                         return;
                       }
-                      if (mode == 2 || mode==1) {
+                      if (mode == 2 || mode == 1) {
                         Navigator.pushNamed(
                           context,
                           '/reviews',
@@ -220,20 +220,22 @@ class _ProgramDetailsState extends State<ProgramDetails> {
                               : 'You can no longer enroll'),
                   ),
                 ),
-              ElevatedButton(
+              if (role == 'admin' || role == 'master admin')
+                ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).colorScheme.primary,
                     foregroundColor: Colors.white,
                   ),
-                  child:Text('Manage Participants'),
-                  onPressed:(){
+                  child: const Text('Manage Participants'),
+                  onPressed: () {
                     Navigator.pushNamed(
-                        context,
-                        '/manage-participants',
-                        arguments: program,
+                      context,
+                      '/manage-participants',
+                      arguments: program,
                     );
-                  }
-              )]),
+                  },
+                ),
+            ]),
             ],
           ),
         ),
